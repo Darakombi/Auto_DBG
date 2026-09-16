@@ -97,8 +97,8 @@ ClickDelay_Input.OnEvent("LoseFocus", OnLoseFocus_ClickDelay_Input)
 
 ClickDelay_UpDown := Win.Add("UpDown", "Range0-" . ClickDelay_Max . " 0x80", ClickDelay)
 ClickDelay_Reset := Win.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
-ClickDelay_Reset.OnEvent("Click", (*) => ClickDelay_Input.Value := ClickDelay_Default)
-
+ClickDelay_Reset.OnEvent("Click", (*) => (ClickDelay_Input.Value := ClickDelay_Default, OnChange_ClickDelay_Input(
+    ClickDelay_Input)))
 OnChange_ClickDelay_Input(con, *) {
     if (!IsNumber(con.Value)) {
         con.SetFont("cFFA500")
@@ -130,7 +130,8 @@ LoadDelay_Input.OnEvent("LoseFocus", OnLoseFocus_LoadDelay_Input)
 
 LoadDelay_UpDown := Win.Add("UpDown", "Range0-" . LoadDelay_Max . " 0x80", LoadDelay)
 LoadDelay_Reset := Win.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
-LoadDelay_Reset.OnEvent("Click", (*) => LoadDelay_Input.Value := LoadDelay_Default)
+LoadDelay_Reset.OnEvent("Click", (*) => (LoadDelay_Input.Value := LoadDelay_Default, OnChange_LoadDelay_Input(
+    LoadDelay_Input)))
 
 OnChange_LoadDelay_Input(con, *) {
     if (!IsNumber(con.Value)) {
