@@ -34,6 +34,3 @@
 ^+3:: Do_Pause_Return()
 
 ^s:: Reload
-
-^F1:: MsgBox(ClickDelay)
-^F2:: MsgBox(LoadDelay)

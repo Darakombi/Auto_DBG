@@ -92,45 +92,62 @@ ClickDelay := IniRead(ConfigFile, "State", "ClickDelay", ClickDelay_Default)
 ClickDelay_Label := Win.Add("Text", "x0 y+20 w200 h40", "Click Delay:")
 ClickDelay_Input := Win.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", ClickDelay)
 ClickDelay_Input.Opt("BackgroundBlack")
-ClickDelay_UpDown := Win.Add("UpDown", "Range0-" . ClickDelay_Max . " 0x80", ClickDelay)
-ClickDelay_Input.OnEvent("Change", (con, *) => (
-    (!IsNumber(con.Value) ? (
-        con.SetFont("cFFA500"))
-        : (
-            parsed := Integer(con.Value || ClickDelay_Default),
-            con.SetFont((parsed > ClickDelay_Max || parsed < 0) ? "cRed" : "cWhite"),
-            clamped := Clamp(parsed, 0, ClickDelay_Max),
-            ClickDelay := clamped,
-            IniWrite(ClickDelay, ConfigFile, "State", "ClickDelay")
-        ))))
+ClickDelay_Input.OnEvent("Change", OnChange_ClickDelay_Input)
+ClickDelay_Input.OnEvent("LoseFocus", OnLoseFocus_ClickDelay_Input)
 
-ClickDelay_Input.OnEvent("LoseFocus", (con, *) => (
-    (!IsNumber(con.Value) || con.Value > ClickDelay_Max || con.Value < 0) ? (
+ClickDelay_UpDown := Win.Add("UpDown", "Range0-" . ClickDelay_Max . " 0x80", ClickDelay)
+ClickDelay_Reset := Win.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
+ClickDelay_Reset.OnEvent("Click", (*) => ClickDelay_Input.Value := ClickDelay_Default)
+
+OnChange_ClickDelay_Input(con, *) {
+    if (!IsNumber(con.Value)) {
+        con.SetFont("cFFA500")
+        return
+    }
+
+    parsed := Integer(con.Value || ClickDelay_Default)
+    global ClickDelay := Clamp(parsed, 0, ClickDelay_Max)
+
+    con.SetFont((parsed > ClickDelay_Max || parsed < 0) ? "cRed" : "cWhite")
+    IniWrite(ClickDelay, ConfigFile, "State", "ClickDelay")
+}
+
+OnLoseFocus_ClickDelay_Input(con, *) {
+    if (!IsNumber(con.Value) || con.Value > ClickDelay_Max || con.Value < 0) {
         con.SetFont("cWhite")
         con.Value := ClickDelay
-    ) : 0
-))
+    }
+}
 
 LoadDelay := IniRead(ConfigFile, "State", "LoadDelay", LoadDelay_Default)
 
-LoadDelay_Label := Win.Add("Text", "x0 y+20 w200 h40", "Load Delay:")
+LoadDelay_Label := Win.Add("Text", "x0 y+10 w200 h40", "Load Delay:")
+
 LoadDelay_Input := Win.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", LoadDelay)
 LoadDelay_Input.Opt("BackgroundBlack")
-LoadDelay_UpDown := Win.Add("UpDown", "Range0-" . LoadDelay_Max . " 0x80", LoadDelay)
-LoadDelay_Input.OnEvent("Change", (con, *) => (
-    (!IsNumber(con.Value) ? (
-        con.SetFont("cFFA500"))
-        : (
-            parsed := Integer(con.Value || LoadDelay_Default),
-            con.SetFont((parsed > LoadDelay_Max || parsed < 0) ? "cRed" : "cWhite"),
-            clamped := Clamp(parsed, 0, LoadDelay_Max),
-            LoadDelay := clamped,
-            IniWrite(LoadDelay, ConfigFile, "State", "LoadDelay")
-        ))))
+LoadDelay_Input.OnEvent("Change", OnChange_LoadDelay_Input)
+LoadDelay_Input.OnEvent("LoseFocus", OnLoseFocus_LoadDelay_Input)
 
-LoadDelay_Input.OnEvent("LoseFocus", (con, *) => (
-    (!IsNumber(con.Value) || con.Value > LoadDelay_Max || con.Value < 0) ? (
+LoadDelay_UpDown := Win.Add("UpDown", "Range0-" . LoadDelay_Max . " 0x80", LoadDelay)
+LoadDelay_Reset := Win.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
+LoadDelay_Reset.OnEvent("Click", (*) => LoadDelay_Input.Value := LoadDelay_Default)
+
+OnChange_LoadDelay_Input(con, *) {
+    if (!IsNumber(con.Value)) {
+        con.SetFont("cFFA500")
+        return
+    }
+
+    parsed := Integer(con.Value || LoadDelay_Default)
+    global LoadDelay := Clamp(parsed, 0, LoadDelay_Max)
+
+    con.SetFont((parsed > LoadDelay_Max || parsed < 0) ? "cRed" : "cWhite")
+    IniWrite(LoadDelay, ConfigFile, "State", "LoadDelay")
+}
+
+OnLoseFocus_LoadDelay_Input(con, *) {
+    if (!IsNumber(con.Value) || con.Value > LoadDelay_Max || con.Value < 0) {
         con.SetFont("cWhite")
         con.Value := LoadDelay
-    ) : 0
-))
+    }
+}
