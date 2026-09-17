@@ -4,19 +4,20 @@
 #Include Global.ahk
 #Include Helper.ahk
 #Include ScreenMap.ahk
+#Include MacroMap.ahk
 #Include Macros.ahk
 #Include Interface.ahk
 
+; Script related
+^s:: Reload
+^q:: ToggleInterface()
 
 ; Misc
 !F1:: ShowMousePos()
 !F2:: ShowFocusedWindow()
+; ^x::
 
-#HotIf InEmulator() || InEditor() || InInterface()
-; Script related
-^s:: Reload
-^q:: ToggleInterface()
-; ^x:: 
+; #HotIf InEmulator() || InEditor() || InInterface()
 
 #HotIf InEmulator()
 ; Rewind from gamemode
@@ -45,7 +46,7 @@
 ; Navigation
 ^c:: Campaign()
 !^2:: PauseRestart()
-!^3:: PauseReturn()
+!^3:: PauseReturn
 
 ^f:: RebirthOverviewFlashbacks()
 +f:: CampaignRebirthOverviewFlashbacks()

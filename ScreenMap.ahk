@@ -74,16 +74,13 @@ SkillMap["UP"] := [1600, 600]
 SkillMap["BD"] := [1600, 750]
 SkillMap["MS"] := [1600, 900]
 SkillMap["BS"] := [1600, 1050]
+SkillMap["INSPIRE"] := [1600, 350]
+SkillMap["AA"] := [1600, 500]
+SkillMap["WS"] := [1600, 650]
+SkillMap["HS"] := [1600, 800]
+SkillMap["ES"] := [1600, 950]
+SkillMap["ID"] := [1600, 1050]
 SkillMap["None"] := [1, 1]
-
-global SkillMacros := Map()
-SkillMacros["EM"] := () => {}
-SkillMacros["HL"] := () => {}
-SkillMacros["UP"] := () => {}
-SkillMacros["BD"] := () => {}
-SkillMacros["MS"] := () => {}
-SkillMacros["BS"] := () => {}
-SkillMacros["None"] := () => {}
 
 ; Stats
 global StatMap := Map()

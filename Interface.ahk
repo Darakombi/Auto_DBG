@@ -1,7 +1,7 @@
 ﻿global Interface_Width := 1000
 global Interface_Height := 800
 
-global Skill_Buttons := Map()
+global SkillButtons := Map()
 
 GetSkillNames(skillNameOnly := true) {
     SkillNames := []
@@ -42,7 +42,7 @@ for skillName in SkillNames {
     skillIcon.OnEvent("Click", OnSkillIconClick.Bind(skillName))
     skillIcon.OnEvent("DoubleClick", OnSkillIconClick.Bind(skillName))
 
-    Skill_Buttons[skillName] := skillIcon
+    SkillButtons[skillName] := skillIcon
 }
 
 OnSkillIconClick(clickedSkill, control, info) {
@@ -61,7 +61,7 @@ OnSkillIconClick(clickedSkill, control, info) {
 }
 
 DisableSkill(skillName, updateCurrent := true) {
-    Skill_Buttons[skillName].Value := SkillIconsPath . "Disabled\" . skillName . ".png"
+    SkillButtons[skillName].Value := SkillIconsPath . "Disabled\" . skillName . ".png"
     if (updateCurrent) {
         global CurrentSkill := "None"
     }
@@ -69,7 +69,7 @@ DisableSkill(skillName, updateCurrent := true) {
 
 DisableAllSkills(updateCurrent := true) {
     for skill in SkillNames {
-        Skill_Buttons[skill].Value := SkillIconsPath . "Disabled\" . skill . ".png"
+        SkillButtons[skill].Value := SkillIconsPath . "Disabled\" . skill . ".png"
     }
     if (updateCurrent) {
         global CurrentSkill := "None"
@@ -78,7 +78,7 @@ DisableAllSkills(updateCurrent := true) {
 
 EnableSkill(skillName, updateCurrent := true) {
     if (skillName != "None") {
-        Skill_Buttons[skillName].Value := SkillIconsPath . "Enabled\" . skillName . ".png"
+        SkillButtons[skillName].Value := SkillIconsPath . "Enabled\" . skillName . ".png"
     }
     if (UpdateCurrent) {
         global CurrentSkill := skillName

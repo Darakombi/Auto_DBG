@@ -23,28 +23,27 @@ ClickDeathMenuRestart() => SClick(DeathMenuRestart)
 ClickDeathMenuReturn() => SClick(DeathMenuReturn, LoadDelay)
 ClickDeathRevive() => SClick(DeathMenuReturn)
 
-
 ; Upgrade before rebirth
 ClickUpgradePre() => SClick(StatMap[CurrentPreStat])
 
 ; Rebirth
-ClickOpenRebirthMenu() => SClick(MenuRebirth)
+ClickRebirthMenu() => SClick(MenuRebirth)
 ClickRebirth() => SClick(RebirthRewind)
 ; ---> Handle flashbacks here <---
 ClickConfirmRebirth() => SClick(RewindConfirm)
 Rebirth() {
-    ClickOpenRebirthMenu()
+    ClickRebirthMenu()
     ClickRebirth()
     ; flashbacks
     ClickConfirmRebirth()
 }
 
 ; Level skill
-; ---> Optional drag here <---
+ExecuteSkillMacro() => SkillMacros[CurrentSkill]()
 ClickUpgradeSkill() => SClick(SkillMap[CurrentSkill])
 ClickConfirmUpgrade() => SClick(SkillUpgradeConfirm)
 Skill() {
-
+    ExecuteSkillMacro()
     ClickUpgradeSkill()
     ClickConfirmUpgrade()
 }
@@ -141,7 +140,6 @@ NoSkillNoPostRewind(ReturnMethod) {
     PreRebirthCampaign()
 }
 
-
 ; Menu related
 ClickEncyclopedia() => SClick(Encyclopedia)
 ClickFlashbacks() => SClick(EncyclopediaFlashbacks)
@@ -152,7 +150,7 @@ OverviewFlashbacks() {
 }
 
 RebirthOverviewFlashbacks() {
-    ClickOpenRebirthMenu()
+    ClickRebirthMenu()
     OverviewFlashbacks()
 }
 

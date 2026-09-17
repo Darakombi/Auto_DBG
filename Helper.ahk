@@ -11,7 +11,7 @@ SClick(point, delay := ClickDelay) {
     Sleep(delay)
 }
 
-CustomDrag(startX, startY, targetX, targetY, steps := 10, delay := 40) {
+CustomDrag(startX, startY, targetX, targetY, steps := 10, delay := 40, finishDelay := 500) {
     MouseMove(startX, startY, 0)
     Click("Left Down")
     Sleep(delay)
@@ -25,7 +25,7 @@ CustomDrag(startX, startY, targetX, targetY, steps := 10, delay := 40) {
         Sleep(delay)
     }
 
-    Sleep(500)
+    Sleep(finishDelay)
     Click("Left Up")
 }
 
@@ -48,7 +48,7 @@ SortArray(arr, options := "CL") {
 Clamp(val, minVal, maxVal) => Max(minVal, Min(val, maxVal))
 
 InEmulator() => InStr(GetFocusedWindow(), "LDPlayer")
-InEditor() => InStr(GetFocusedWindow(), "Code")
+InEditor() => InStr(GetFocusedWindow(), "Visual Studio Code")
 InInterface() => InStr(GetFocusedWindow(), "DBG")
 
 ToggleInterface() {
