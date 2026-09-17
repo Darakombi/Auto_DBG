@@ -7,9 +7,11 @@
 #Include Navigation.ahk
 #Include GUI.ahk
 
+!9:: MsgBox((InEmulator() || InEditor()) ? "1" : "0")
 
+#HotIf InEmulator() || InEditor()
 !1:: GetMouse()
-!2:: GetFocusedWindow()
+!2:: ShowFocusedWindow()
 
 ^q:: {
     if (Win.IsOpen) {
@@ -21,7 +23,6 @@
         Win.IsOpen := true
     }
 }
-
 
 ^1:: Rewind(Do_Death_Return)
 ^2:: Rewind(Do_Win_Return)

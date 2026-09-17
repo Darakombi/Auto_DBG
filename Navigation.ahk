@@ -92,6 +92,7 @@ Rebirth_Skill_Campaign() {
 }
 
 Rebirth_Skill_Post_Campaign() {
+    Do_OpenRebirthMenu()
     Do_Rebirth()
     Do_ConfirmRebirth()
     Do_UpgradeSkill()

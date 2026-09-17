@@ -17,6 +17,7 @@ Skill_Points["UP"] := [1600, 600]
 Skill_Points["BD"] := [1600, 750]
 Skill_Points["MS"] := [1600, 900]
 Skill_Points["BS"] := [1600, 1050]
+Skill_Points["None"] := [1, 1]
 
 global Default_Skill := "EM"
 global Current_Skill := IniRead(ConfigFile, "State", "LastSkill", Default_Skill)

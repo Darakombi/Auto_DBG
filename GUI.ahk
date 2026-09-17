@@ -77,7 +77,9 @@ DisableAllSkills(updateCurrent := true) {
 }
 
 EnableSkill(skill_name, updateCurrent := true) {
-    Skill_Buttons[skill_name].Value := Skill_Icons . "Enabled\" . skill_name . ".png"
+    if (skill_name != "None") {
+        Skill_Buttons[skill_name].Value := Skill_Icons . "Enabled\" . skill_name . ".png"
+    }
     if (UpdateCurrent) {
         global Current_Skill := skill_name
     }

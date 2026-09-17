@@ -3,10 +3,8 @@ GetMouse() {
     MsgBox "X: " x "`nY: " y
 }
 
-GetFocusedWindow() {
-    Title := WinGetTitle("A")
-    MsgBox Title
-}
+GetFocusedWindow() => WinGetTitle("A")
+ShowFocusedWindow() => MsgBox(GetFocusedWindow())
 
 SClick(point, delay := Unset) {
     if (!InStr(WinGetTitle("A"), "LDPlayer")) {
@@ -34,3 +32,6 @@ SortArray(arr, options := "CL") {
 }
 
 Clamp(val, minVal, maxVal) => Max(minVal, Min(val, maxVal))
+
+InEmulator() => InStr(GetFocusedWindow(), "LDPlayer")
+InEditor() => InStr(GetFocusedWindow(), "Code")
