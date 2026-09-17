@@ -3,35 +3,53 @@
 
 #Include Global.ahk
 #Include Helper.ahk
-#Include Layout.ahk
-#Include Navigation.ahk
-#Include GUI.ahk
+#Include ScreenMap.ahk
+#Include Macros.ahk
+#Include Interface.ahk
 
-!9:: MsgBox((InEmulator() || InEditor()) ? "1" : "0")
 
-#HotIf InEmulator() || InEditor()
-!1:: GetMouse()
-!2:: ShowFocusedWindow()
+; Misc
+!F1:: ShowMousePos()
+!F2:: ShowFocusedWindow()
 
-^q:: {
-    if (Win.IsOpen) {
-        Win.Hide()
-        Win.IsOpen := false
-    }
-    else {
-        Win.Show("x300 y150 w" . Win_Width . " h" . Win_Height)
-        Win.IsOpen := true
-    }
-}
-
-^1:: Rewind(Do_Death_Return)
-^2:: Rewind(Do_Win_Return)
-^3:: Rewind(Do_Pause_Return)
-^4:: Rebirth_Skill_Post_Campaign()
-^5:: EnterCampaign()
-
-; ^+1:: Do_Death_Restart()
-^+2:: Do_Pause_Restart()
-^+3:: Do_Pause_Return()
-
+#HotIf InEmulator() || InEditor() || InInterface()
+; Script related
 ^s:: Reload
+^q:: ToggleInterface()
+; ^x:: 
+
+#HotIf InEmulator()
+; Rewind from gamemode
+^1:: FullRewind(ClickDeathMenuReturn)
+^2:: FullRewind(ClickWinMenuReturn)
+^3:: FullRewind(PauseReturn)
+
++1:: NoSkillRewind(ClickDeathMenuReturn)
++2:: NoSkillRewind(ClickWinMenuReturn)
++3:: NoSkillRewind(PauseReturn)
+
+!1:: NoPostRewind(ClickDeathMenuReturn)
+!2:: NoPostRewind(ClickWinMenuReturn)
+!3:: NoPostRewind(PauseReturn)
+
+!+1:: NoPostRewind(ClickDeathMenuReturn)
+!+2:: NoPostRewind(ClickWinMenuReturn)
+!+3:: NoPostRewind(PauseReturn)
+
+; Rewind from main menu
+^r:: PreRebirthSkillPostCampaign()
++r:: PreRebirthPostCampaign()
+!r:: PreRebirthSkillCampaign()
+!+r:: PreRebirthCampaign()
+
+; Navigation
+^c:: Campaign()
+!^2:: PauseRestart()
+!^3:: PauseReturn()
+
+^f:: RebirthOverviewFlashbacks()
++f:: CampaignRebirthOverviewFlashbacks()
+
+#HotIf InEditor()
+
+#HotIf InInterface()

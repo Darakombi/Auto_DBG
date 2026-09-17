@@ -3,14 +3,13 @@
 + GUI that you can currently change the active skill being upgraded and adjust the click delays in
 + Various combinations of simple traversal bound to hotkeys (ctrl + 1/2/3 -> Rewind | ctrl + 4 -> enter rebirth menu, spend resources and reenter campaing | ctrl + 5 -> enter campaign)
 
-## Other controls:
+## Other controls (only work in emulator & editor):
 + ctrl + s -> reload
 + ctrl + q -> show/hide gui
-+ ctrl + shift + 1 -> show mouse coordinate
-+ ctrl + shift + 2 -> show active application
++ alt + 1 -> show mouse coordinate
++ alt + 2 -> show active application
 
 ### Current issues:
-+ Problem with lambda onevent function when editing delays in the gui. The ClickDelay and LoadDelay variables being updated there aren't the global variables used in SClick, but local ones that get discarded. The delays are still updated when reloading the whole script since the changes are also saved and read in the Config.ini file.
 + Skills under BS are inaccessible. Will need to add scrolling.
 
 ### Future ideas/plans:
