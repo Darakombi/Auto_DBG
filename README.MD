@@ -10,10 +10,10 @@
 + alt + 2 -> show active application
 
 ### Current issues:
-+ Skills under BS are inaccessible. Will need to add scrolling.
++ Awkward bindings. Could have buttons for each action instead in the future.
 
 ### Future ideas/plans:
-+ OCR for various things
++ OCR tomorrow!!
 + Visual counter for Rewinds until Flashback, current skill level (possibly being able to set a goal and auto switch skills and same with stats)
 + Somehow run all of that in the background (not having to focus the emulator)
 + Alert when stalling/flashback
@@ -22,4 +22,4 @@
 + Automate flashbacks??
 
 ### Design notes:
-Currently using LDPlayer due to it not causing too many issues. The hardcoded locations aren't great, but assuming a universal 1920x1080 screen size, they shouldn't be a problem. The delay times might need tweaking, but these are working fine for me.
+Currently using LDPlayer due to it not causing too many issues. The hardcoded locations aren't great, but assuming a universal 1920x1080 screen size, they shouldn't be a problem. The delay times might need tweaking, but these are working fine for me. Avoiding the use of LDPlayer's inbuilt keymappings and macros in case I switch emulators.
