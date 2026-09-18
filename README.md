@@ -13,7 +13,8 @@
 + Awkward bindings. Could have buttons for each action instead in the future.
 
 ### Future ideas/plans:
-+ OCR tomorrow!!
++ OCR?
++ Make stats editable in the gui (same as skills)
 + Visual counter for Rewinds until Flashback, current skill level (possibly being able to set a goal and auto switch skills and same with stats)
 + Somehow run all of that in the background (not having to focus the emulator)
 + Alert when stalling/flashback
@@ -23,3 +24,4 @@
 
 ### Design notes:
 Currently using LDPlayer due to it not causing too many issues. The hardcoded locations aren't great, but assuming a universal 1920x1080 screen size, they shouldn't be a problem. The delay times might need tweaking, but these are working fine for me. Avoiding the use of LDPlayer's inbuilt keymappings and macros in case I switch emulators.
+[OCR](https://github.com/Descolada/OCR) ended up being very unreliable here. Will look into alternatives.

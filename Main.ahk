@@ -8,16 +8,16 @@
 #Include Macros.ahk
 #Include Interface.ahk
 
-; Script related
-^s:: Reload
-^q:: ToggleInterface()
 
 ; Misc
 !F1:: ShowMousePos()
 !F2:: ShowFocusedWindow()
 ; ^x::
 
-; #HotIf InEmulator() || InEditor() || InInterface()
+#HotIf InEmulator() || InEditor() || InInterface()
+; Script related
+^s:: Reload
+^q:: ToggleInterface()
 
 #HotIf InEmulator()
 ; Rewind from gamemode
@@ -39,9 +39,9 @@
 
 ; Rewind from main menu
 ^r:: PreRebirthSkillPostCampaign()
-+r:: PreRebirthPostCampaign()
-!r:: PreRebirthSkillCampaign()
-!+r:: PreRebirthCampaign()
++r:: RebirthSkillPostCampaign()
+!r:: RebirthPostCampaign()
+; !+r:: PreRebirthCampaign()
 
 ; Navigation
 ^c:: Campaign()

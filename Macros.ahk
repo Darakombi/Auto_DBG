@@ -24,7 +24,12 @@ ClickDeathMenuReturn() => SClick(DeathMenuReturn, LoadDelay)
 ClickDeathRevive() => SClick(DeathMenuReturn)
 
 ; Upgrade before rebirth
+ClickStatMenu() => SClick(MenuStat)
 ClickUpgradePre() => SClick(StatMap[CurrentPreStat])
+Pre() {
+    ClickStatMenu()
+    ClickUpgradePre()
+}
 
 ; Rebirth
 ClickRebirthMenu() => SClick(MenuRebirth)
@@ -68,7 +73,7 @@ Campaign() {
 
 ; Bundles
 PreRebirth() {
-    ClickUpgradePre()
+    Pre()
     Rebirth()
 }
 
