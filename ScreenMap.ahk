@@ -64,7 +64,7 @@ global WinMenuContinue := [1100, 850]
 ; Death menu
 global DeathMenuReturn := [750, 700]
 global DeathMenuRestart := [900, 700]
-global DeathRevive := [1150, 700]
+global DeathMenuRevive := [1150, 700]
 
 ; Skills
 global SkillMap := Map()

@@ -1,5 +1,5 @@
-﻿global Interface_Width := 1000
-global Interface_Height := 800
+﻿global Overlay_Width := 1000
+global Overlay_Height := 800
 
 global SkillButtons := Map()
 
@@ -22,10 +22,10 @@ GetSkillNames(skillNameOnly := true) {
 
 global SkillNames := GetSkillNames()
 
-Interface := Gui("+Resize SysMenu", "Auto DBG Interface")
-Interface.IsOpen := false
-Interface.BackColor := "1e1e1e"
-Interface.SetFont("cFFFFFF s20", "Maple Mono")
+Overlay := Gui("+Resize SysMenu", "Auto DBG Overlay")
+Overlay.IsOpen := false
+Overlay.BackColor := "1e1e1e"
+Overlay.SetFont("cFFFFFF s20", "Maple Mono")
 
 width := 96
 height := 96
@@ -36,7 +36,7 @@ for skillName in SkillNames {
     col := Mod(i, cols)
     row := Floor(i / cols)
 
-    skillIcon := Interface.Add("Picture", "x" . (width * col) . " y" . (height * row) . " w" . width . " h" .
+    skillIcon := Overlay.Add("Picture", "x" . (width * col) . " y" . (height * row) . " w" . width . " h" .
     height, SkillIconsPath . "Disabled\" . skillName . ".png")
 
     skillIcon.OnEvent("Click", OnSkillIconClick.Bind(skillName))
@@ -87,18 +87,18 @@ EnableSkill(skillName, updateCurrent := true) {
 
 EnableSkill(CurrentSkill)
 
-Info1 := Interface.Add("Text", "x0 y+12 w400 h50 -Wrap", "Enabled Skill: " . CurrentSkill)
+Info1 := Overlay.Add("Text", "x0 y+12 w400 h50 -Wrap", "Enabled Skill: " . CurrentSkill)
 
 ClickDelay := IniRead(ConfigFilePath, "State", "ClickDelay", ClickDelayDefault)
 
-ClickDelayLabel := Interface.Add("Text", "x0 y+20 w200 h40", "Click Delay:")
-ClickDelayInput := Interface.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", ClickDelay)
+ClickDelayLabel := Overlay.Add("Text", "x0 y+20 w200 h40", "Click Delay:")
+ClickDelayInput := Overlay.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", ClickDelay)
 ClickDelayInput.Opt("BackgroundBlack")
 ClickDelayInput.OnEvent("Change", OnClickDelayInputChange)
 ClickDelayInput.OnEvent("LoseFocus", OnClickDelayInputLoseFocus)
 
-ClickDelayUpDown := Interface.Add("UpDown", "Range0-" . ClickDelayMax . " 0x80", ClickDelay)
-ClickDelayReset := Interface.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
+ClickDelayUpDown := Overlay.Add("UpDown", "Range0-" . ClickDelayMax . " 0x80", ClickDelay)
+ClickDelayReset := Overlay.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
 ClickDelayReset.OnEvent("Click", (*) => (ClickDelayInput.Value := ClickDelayDefault, OnClickDelayInputChange(
     ClickDelayInput)))
 OnClickDelayInputChange(con, *) {
@@ -123,15 +123,15 @@ OnClickDelayInputLoseFocus(con, *) {
 
 LoadDelay := IniRead(ConfigFilePath, "State", "LoadDelay", LoadDelayDefault)
 
-LoadDelayLabel := Interface.Add("Text", "x0 y+10 w200 h40", "Load Delay:")
+LoadDelayLabel := Overlay.Add("Text", "x0 y+10 w200 h40", "Load Delay:")
 
-LoadDelayInput := Interface.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", LoadDelay)
+LoadDelayInput := Overlay.Add("Edit", "x+0 yp w150 h40 -E0x200 Center -Tabstop", LoadDelay)
 LoadDelayInput.Opt("BackgroundBlack")
 LoadDelayInput.OnEvent("Change", OnLoadDelayInputChange)
 LoadDelayInput.OnEvent("LoseFocus", OnLoadDelayInputLoseFous)
 
-LoadDelayUpDown := Interface.Add("UpDown", "Range0-" . LoadDelayMax . " 0x80", LoadDelay)
-LoadDelayReset := Interface.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
+LoadDelayUpDown := Overlay.Add("UpDown", "Range0-" . LoadDelayMax . " 0x80", LoadDelay)
+LoadDelayReset := Overlay.Add("Button", "x+0 w40 h40 -E0x200 -Border -Tabstop center", "⟳")
 LoadDelayReset.OnEvent("Click", (*) => (LoadDelayInput.Value := LoadDelayDefault, OnLoadDelayInputChange(
     LoadDelayInput)))
 
@@ -154,3 +154,8 @@ OnLoadDelayInputLoseFous(con, *) {
         con.Value := LoadDelay
     }
 }
+
+defaultRewindsUntilFlashback := 5
+flashbackTooltip := Overlay.AddText("x0", "Rewinds until flashback:")
+rewindsUntilFlashback := IniRead("Config.ini", "State", "RewindsUntilFlashback", defaultRewindsUntilFlashback)
+flashbackCount := Overlay.AddText("x+10 yp", rewindsUntilFlashback)

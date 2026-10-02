@@ -16,7 +16,7 @@ global CurrentSkill := IniRead(ConfigFilePath, "State", "LastSkill", DefaultSkil
 
 ; Stats
 global DefaultPreStat := "Crit"
-global CurrentPreStat := "Crit"
+global CurrentPreStat := "Gold"
 
 global DefaultPostStat := "Gold"
 global CurrentPostStat := "Gold"

@@ -21,7 +21,7 @@ ClickWinMenuReturn() => SClick(WinMenuReturn, LoadDelay)
 ; On Death
 ClickDeathMenuRestart() => SClick(DeathMenuRestart)
 ClickDeathMenuReturn() => SClick(DeathMenuReturn, LoadDelay)
-ClickDeathRevive() => SClick(DeathMenuReturn)
+ClickDeathRevive() => SClick(DeathMenuRevive)
 
 ; Upgrade before rebirth
 ClickStatMenu() => SClick(MenuStat)
@@ -34,23 +34,26 @@ Pre() {
 ; Rebirth
 ClickRebirthMenu() => SClick(MenuRebirth)
 ClickRebirth() => SClick(RebirthRewind)
-; ---> Handle flashbacks here <---
 ClickConfirmRebirth() => SClick(RewindConfirm)
 Rebirth() {
     ClickRebirthMenu()
     ClickRebirth()
-    ; flashbacks
+    ; Sleep(100)
+    ; if (IsDetectedArray(FlashbackIconCoords, FlashbackIconPath)) {
+    ;     SClick(SkillUpgradeConfirm)
+    ;     return
+    ; }
     ClickConfirmRebirth()
 }
 
 ; Level skill
 ExecuteSkillMacro() => SkillMacros[CurrentSkill]()
 ClickUpgradeSkill() => SClick(SkillMap[CurrentSkill])
-ClickConfirmUpgrade() => SClick(SkillUpgradeConfirm)
+ClickConfirmSkillUpgrade() => SClick(SkillUpgradeConfirm)
 Skill() {
     ExecuteSkillMacro()
     ClickUpgradeSkill()
-    ClickConfirmUpgrade()
+    ClickConfirmSkillUpgrade()
 }
 
 ; Upgrade after rebirth
@@ -65,84 +68,52 @@ Post() {
 ClickOpenBattlePanel() => SClick(PanelBattle)
 ClickCampaign() => SClick(GamemodeCampaign)
 ClickConfirmCampaign() => SClick(CampaignConfirm)
+MinsToMs(mins) => mins * 60 * 10000
+ChimeRemind() {
+    SetTimer(() => SoundBeep(1000, 800), -209000,)
+}
 Campaign() {
     ClickOpenBattlePanel()
     ClickCampaign()
     ClickConfirmCampaign()
+    ChimeRemind()
 }
 
-; Bundles
-PreRebirth() {
+rewinding := false
+Rewind(ReturnMethod := (*) => 0, preFunc := (*) => 0, postFunc := (*) => 0) {
+    global rewindsUntilFlashback, flashbackCount, rewinding
+    if (rewinding) {
+        return
+    }
+    rewinding := true
+    
+    preFunc()
+    ReturnMethod()
     Pre()
-    Rebirth()
-}
+    ClickRebirthMenu()
 
-RebirthSkill() {
-    Rebirth()
+    isFlashback := false
+    if (IsDetected(FlashbackIconCoords, FlashBackIconPath)) {
+        isFlashback := true
+    }
+    ClickRebirth()
+    if (isFlashback) {
+        ClickConfirmSkillUpgrade()
+        rewindsUntilFlashback := defaultRewindsUntilFlashback
+        flashbackCount.Value := rewindsUntilFlashback
+        IniWrite(rewindsUntilFlashback, "Config.ini", "State", "RewindsUntilFlashback")
+        return
+    }
+    flashbackCount.Value := --rewindsUntilFlashback
+    IniWrite(rewindsUntilFlashback, "Config.ini", "State", "RewindsUntilFlashback")
+
+    ClickConfirmRebirth()
     Skill()
-}
-
-PreRebirthSkill() {
-    PreRebirth()
-    Skill()
-}
-
-PostCampaign() {
     Post()
     Campaign()
-}
+    postFunc()
 
-RebirthPostCampaign() {
-    Rebirth()
-    PostCampaign()
-}
-
-RebirthSkillPostCampaign() {
-    Rebirth()
-    Skill()
-    PostCampaign()
-}
-
-PreRebirthCampaign() {
-    PreRebirth()
-    Campaign()
-}
-
-PreRebirthSkillCampaign() {
-    PreRebirth()
-    Skill()
-    Campaign()
-}
-
-PreRebirthPostCampaign() {
-    PreRebirth()
-    PostCampaign()
-}
-
-PreRebirthSkillPostCampaign() {
-    PreRebirth
-    Skill()
-    PostCampaign()
-}
-
-FullRewind(ReturnMethod) {
-    ReturnMethod()
-    PreRebirthSkillPostCampaign
-}
-
-NoSkillRewind(ReturnMethod) {
-    ReturnMethod()
-    PreRebirthPostCampaign()
-}
-
-NoPostRewind(ReturnMethod) {
-    ReturnMethod()
-    PreRebirthSkillCampaign()
-}
-
-NoSkillNoPostRewind(ReturnMethod) {
-    ReturnMethod
-    PreRebirthCampaign()
+    rewinding := false
 }
 
 ; Menu related
@@ -163,3 +134,5 @@ CampaignRebirthOverviewFlashbacks(ReturnMethod := PauseReturn) {
     ReturnMethod()
     RebirthOverviewFlashbacks()
 }
+
+; !x::
